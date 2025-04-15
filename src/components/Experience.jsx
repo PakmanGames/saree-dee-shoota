@@ -1,7 +1,9 @@
 import { OrbitControls, Environment } from "@react-three/drei";
-import { insertCoin, onPlayerJoin, Joystick } from "playroomkit";
+import { insertCoin, onPlayerJoin, Joystick, myPlayer } from "playroomkit";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
+import { CharacterController } from "./CharacterController";
+import { CharacterSoldier } from "./CharacterSoldier";
 
 
 export const Experience = () => {
@@ -9,12 +11,14 @@ export const Experience = () => {
 
   const start = async () => {
     await insertCoin();
+    console.log("Game started");
   }
 
   useEffect(() => {
     start();
 
     onPlayerJoin((state) => {
+      console.log("Player joined:", state.id);
       const joystick = new Joystick(state, {
         type: "angular",
         buttons: [{ id: "fire", label: "Shoot" }],
@@ -23,12 +27,17 @@ export const Experience = () => {
       state.setState("health", 100);
       state.setState("deaths", 0);
       state.setState("kills", 0);
-      setPlayers((players) => [...players, newPlayer]);
+      setPlayers((players) => {
+        console.log("Updated players:", [...players, newPlayer]);
+        return [...players, newPlayer];
+      });
       state.onQuit(() => {
         setPlayers((players) => players.filter((p) => p.state.id !== state.id));
       });
     });
   }, []);
+
+  console.log("Current players:", players);
 
   return (
     <>
@@ -48,6 +57,15 @@ export const Experience = () => {
       />
       <OrbitControls />
       <Map />
+      {players.map(({state, joystick}, index) => (
+        <CharacterController 
+          key={state.id} 
+          position-x={index * 2}
+          state={state} 
+          joystick={joystick} 
+          userPlayer={state.id === myPlayer()?.id}
+        />
+      ))}
       <Environment preset="sunset" />
     </>
   );
