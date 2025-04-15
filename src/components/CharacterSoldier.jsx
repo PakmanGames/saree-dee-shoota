@@ -49,11 +49,11 @@ export function CharacterSoldier({
     return () => actions[animation]?.fadeOut(0.2);
   }, [animation]);
 
-  const playerColorMaterial = useMeme(() => {
-    new MeshStandardMaterial({
+  const playerColorMaterial = useMemo(() => {
+    return new MeshStandardMaterial({
       color: new Color(color),
     });
-  });
+  }, [color]);
 
   useEffect(() => {
     // Hide non selected weapons
@@ -87,7 +87,7 @@ export function CharacterSoldier({
         child.castShadow = true;
       }
     });
-  });
+  }, [nodes, clone]);
 
   return (
     <group ref={group} {...props} dispose={null}>
