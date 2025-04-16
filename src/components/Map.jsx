@@ -15,7 +15,7 @@ export const Map = () => {
     });
 
     return (
-        <RigidBody colliders="trimesh">
+        <RigidBody colliders="trimesh" type="fixed">
             <primitive object={map.scene} />
         </RigidBody>
     );
