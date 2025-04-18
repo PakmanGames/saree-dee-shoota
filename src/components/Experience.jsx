@@ -3,7 +3,6 @@ import { insertCoin, onPlayerJoin, Joystick, myPlayer } from "playroomkit";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import { CharacterController } from "./CharacterController";
-import { CharacterSoldier } from "./CharacterSoldier";
 
 
 export const Experience = () => {
@@ -12,10 +11,6 @@ export const Experience = () => {
   const start = async () => {
     await insertCoin();
     console.log("Game started");
-  }
-
-  useEffect(() => {
-    start();
 
     onPlayerJoin((state) => {
       console.log("Player joined:", state.id);
@@ -27,14 +22,15 @@ export const Experience = () => {
       state.setState("health", 100);
       state.setState("deaths", 0);
       state.setState("kills", 0);
-      setPlayers((players) => {
-        console.log("Updated players:", [...players, newPlayer]);
-        return [...players, newPlayer];
-      });
+      setPlayers((players) => [...players, newPlayer]);
       state.onQuit(() => {
         setPlayers((players) => players.filter((p) => p.state.id !== state.id));
       });
     });
+  }
+
+  useEffect(() => {
+    start();
   }, []);
 
   console.log("Current players:", players);
