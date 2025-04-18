@@ -230,10 +230,10 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@dimforge/rapier3d-compat@0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@dimforge/rapier3d-compat/-/rapier3d-compat-0.15.0.tgz#53fc00c2655d12baf723ecc9ca9e972e412c2800"
-  integrity sha512-TRH9rmF6RJqvKt0xis6VkToJHz4Pf54IfYhKGWn7zkpTWPwVyQ4p9kjwrdm6jOfGn72MBrIbttzvDB/ZOqE7sg==
+"@dimforge/rapier3d-compat@0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@dimforge/rapier3d-compat/-/rapier3d-compat-0.14.0.tgz#c6148f743aa99de320231527c466c1a48ada4c9f"
+  integrity sha512-/uHrUzS+CRQ+NQrrJCEDUkhwHlNsAAexbNXgbN9sHY+GwR+SFFAFrxRr8Llf5/AJZzqiLANdQIfJ63Cw4gJVqw==
 
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"
@@ -804,14 +804,14 @@
     postprocessing "^6.32.1"
     three-stdlib "^2.23.4"
 
-"@react-three/rapier@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@react-three/rapier/-/rapier-2.1.0.tgz#a184bd0edfed0a718fd2fc8e6f27983fa1076934"
-  integrity sha512-o1VzgCEILnc4noF4t5WNPYCy6dh0bTcd0Fa/xZa5/LBDnjYMb2mlWX6f+wMck5ucdz2BsVV+tpYWTGvb72QRIA==
+"@react-three/rapier@^1.1.1":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@react-three/rapier/-/rapier-1.5.0.tgz#f6af5b1dd6895a73df0d09e15576eed1f0398379"
+  integrity sha512-gylk2KyCer9EoymFyTyc+g2IqyAq4mTbZgaHoSJi6gHoXlJsC2LVeN4jedvegvjUsXPExdE60wHjCPa+DS4iXw==
   dependencies:
-    "@dimforge/rapier3d-compat" "0.15.0"
+    "@dimforge/rapier3d-compat" "0.14.0"
     suspend-react "^0.1.3"
-    three-stdlib "^2.35.12"
+    three-stdlib "^2.29.4"
 
 "@stitches/react@^1.2.8":
   version "1.2.8"
@@ -3258,7 +3258,7 @@ three-mesh-bvh@^0.6.0:
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.6.8.tgz#f27d18ca75bdc59316dff0f561af8fb316621a54"
   integrity sha512-EGebF9DZx1S8+7OZYNNTT80GXJZVf+UYXD/HyTg/e2kR/ApofIFfUS4ZzIHNnUVIadpnLSzM4n96wX+l7GMbnQ==
 
-three-stdlib@^2.22.4, three-stdlib@^2.23.4, three-stdlib@^2.23.9, three-stdlib@^2.35.12, three-stdlib@^2.35.15:
+three-stdlib@^2.22.4, three-stdlib@^2.23.4, three-stdlib@^2.23.9, three-stdlib@^2.27.15, three-stdlib@^2.29.4:
   version "2.35.15"
   resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.35.15.tgz#9fee21275eaf0c1130b0ad8bf5fd4242ffe2af28"
   integrity sha512-2XbhiOV7jVCchUoWxTmsj5dNhTe8eYb58Nyrfoa2F2yL+6h/+2VRaU2gENljRW1d/P1mk4/uwNzbdkKWV3hwzw==
