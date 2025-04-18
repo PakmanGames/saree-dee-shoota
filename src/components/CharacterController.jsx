@@ -1,7 +1,8 @@
 import { useRef, useState } from "react"
 import { CharacterSoldier } from "./CharacterSoldier"
-import { RigidBody, CapsuleCollider } from "@react-three/rapier";
+import { RigidBody, CapsuleCollider, vec3 } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
+import { CameraControls } from "@react-three/drei";
 
 const MOVEMENT_SPEED = 200;
 
@@ -14,17 +15,25 @@ export const CharacterController = ({
     const group = useRef();
     const character = useRef();
     const rigidbody = useRef();
+    const controls = useRef();
     const [animation, setAnimation] = useState("Idle");
-    
-    // useEffect(() => {
-    //     console.log("CharacterController rendered:", {
-    //         stateId: state.id,
-    //         color: state.state.profile?.color,
-    //         userPlayer
-    //     });
-    // }, [state, userPlayer]);
 
     useFrame((_, delta) => {
+        if (controls.current) {
+            const cameraDistanceY = window.innerWidth < 1024 ? 16 : 20;
+            const cameraDistanceZ = window.innerWidth < 1024 ? 12: 16;
+            const playerWorldPos = vec3(rigidbody.current.translation());
+            controls.current.setLookAt(
+                playerWorldPos.x,
+                playerWorldPos.y + (state.state.dead ? 12 : cameraDistanceY),
+                playerWorldPos.z, + (state.state.dead ? 2 : cameraDistanceZ),
+                playerWorldPos.x,
+                playerWorldPos.y + 1.5,
+                playerWorldPos.z,
+                true
+            );
+        }
+
         const angle = joystick.angle; // Get angle from joystick to update player position
         if (joystick.isJoystickPressed() && angle) {
             setAnimation("Run");
@@ -53,6 +62,9 @@ export const CharacterController = ({
 
     return (
         <group ref={group} {...props}>
+            {
+                userPlayer && (<CameraControls ref={controls} />)
+            }
             <RigidBody 
                 ref={rigidbody} 
                 colliders={false} 
