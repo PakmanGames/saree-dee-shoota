@@ -7,6 +7,13 @@ import { CameraControls } from "@react-three/drei";
 const MOVEMENT_SPEED = 200;
 const FIRE_RATE = 380;
 
+// Fix bullet not shooting from gun mesh
+export const WEAPON_OFFSET = {
+    x: -0.2,
+    y: 1.4,
+    z: 0.8,
+};
+
 export const CharacterController = ({
     state,
     joystick,

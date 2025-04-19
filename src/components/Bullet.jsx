@@ -1,5 +1,6 @@
 import { RigidBody } from "@react-three/rapier";
 import { useEffect, useRef } from "react";
+import { WEAPON_OFFSET } from "./CharacterController";
 
 const BULLET_SPEED = 20;
 
@@ -25,11 +26,17 @@ export const Bullet = ({ player, angle, position, onHit }) => {
 
     return (
         <group position={[position.x, position.y, position.z]} rotation-y={angle}>
-            <RigidBody ref={rigidbody}>
-                <mesh position-z={0.25} material={bulletMaterial} castShadow>
-                    <boxGeometry args={[0.05, 0.05, 0.5]} />
-                </mesh>
-            </RigidBody>
+            <group
+                position-x={WEAPON_OFFSET.x}
+                position-y={WEAPON_OFFSET.y}
+                position-z={WEAPON_OFFSET.z}
+            >
+                <RigidBody ref={rigidbody}>
+                    <mesh position-z={0.25} material={bulletMaterial} castShadow>
+                        <boxGeometry args={[0.05, 0.05, 0.5]} />
+                    </mesh>
+                </RigidBody>
+            </group>
         </group>
     );
 }
