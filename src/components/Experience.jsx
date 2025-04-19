@@ -3,10 +3,20 @@ import { insertCoin, onPlayerJoin, Joystick, myPlayer } from "playroomkit";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import { CharacterController } from "./CharacterController";
+import { Bullet } from "./Bullet";
 
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
+  const [bullets, setBullets] = useState([]);
+
+  const onFire = (bullet) => {
+    setBullets((bullets) => [...bullets, bullet]);
+  };
+
+  const onHit = (bulletId) => {
+    setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
+  }
 
   const start = async () => {
     await insertCoin();
@@ -27,7 +37,7 @@ export const Experience = () => {
         setPlayers((players) => players.filter((p) => p.state.id !== state.id));
       });
     });
-  }
+  };
 
   useEffect(() => {
     start();
@@ -59,7 +69,11 @@ export const Experience = () => {
           state={state} 
           joystick={joystick} 
           userPlayer={state.id === myPlayer()?.id}
+          onFire={onFire}
         />
+      ))}
+      {bullets.map((bullet) => (
+        <Bullet key={bullet.id} {...bullet} onHit={() => onHit(bullet.id)} />
       ))}
       <Environment preset="sunset" />
     </>
