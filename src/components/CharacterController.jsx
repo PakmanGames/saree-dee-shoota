@@ -103,6 +103,7 @@ export const CharacterController = ({
                         color={state.state.profile?.color || "red"}
                         animation={animation}
                     />
+                    { userPlayer && <Crosshair position={[WEAPON_OFFSET.x, WEAPON_OFFSET.y, WEAPON_OFFSET.z]} />}
                 </group>
                 <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
             </RigidBody>
