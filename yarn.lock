@@ -746,14 +746,16 @@
     suspend-react "^0.1.3"
     zustand "^3.7.1"
 
-"@react-three/postprocessing@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-3.0.4.tgz#e2379eb0b953d1cc0c4b8ac94dc76256f4c07062"
-  integrity sha512-e4+F5xtudDYvhxx3y0NtWXpZbwvQ0x1zdOXWTbXMK6fFLVDd4qucN90YaaStanZGS4Bd5siQm0lGL/5ogf8iDQ==
+"@react-three/postprocessing@^2.15.1":
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.19.1.tgz#9489138364a948faca7996d877b9375089fc9c9c"
+  integrity sha512-7P25LOSToH/I6b3UipNK17IIFlX4FDUmWcaomfwu82+CzhXTOz8Fcc1ZXEZ7vFA/5Fr/2peNlXgXZJvoa+aCdA==
   dependencies:
+    buffer "^6.0.3"
     maath "^0.6.0"
-    n8ao "^1.9.4"
-    postprocessing "^6.36.6"
+    n8ao "^1.6.6"
+    postprocessing "^6.32.1"
+    three-stdlib "^2.23.4"
 
 "@react-three/rapier@^1.1.1":
   version "1.5.0"
@@ -932,6 +934,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+base64-js@^1.3.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
+  integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
+
 bidi-js@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/bidi-js/-/bidi-js-1.0.3.tgz#6f8bcf3c877c4d9220ddf49b9bb6930c88f877d2"
@@ -967,6 +974,14 @@ browserslist@^4.24.0, browserslist@^4.24.4:
     electron-to-chromium "^1.5.73"
     node-releases "^2.0.19"
     update-browserslist-db "^1.1.1"
+
+buffer@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
+  integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
+  dependencies:
+    base64-js "^1.3.1"
+    ieee754 "^1.2.1"
 
 camelcase-css@^2.0.1:
   version "2.0.1"
@@ -1276,6 +1291,11 @@ hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
+ieee754@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
+  integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
+
 is-binary-path@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-binary-path/-/is-binary-path-2.1.0.tgz#ea1f7f3b80f064236e83470f86c09c254fb45b09"
@@ -1517,7 +1537,7 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-n8ao@^1.9.4:
+n8ao@^1.6.6:
   version "1.9.4"
   resolved "https://registry.yarnpkg.com/n8ao/-/n8ao-1.9.4.tgz#be222531fddcb5099614be452fc492db98a2947d"
   integrity sha512-gbpAorQecZn2oGK/rheHxPTNwOxVsEC6216+Jr9tXHUk9L5VCE2q/uxsSrQpfNkZDoCmQHf7oSg3SYFWCAt0wg==
@@ -1658,7 +1678,7 @@ postcss@^8.4.27, postcss@^8.4.31, postcss@^8.4.47:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-postprocessing@^6.36.6:
+postprocessing@^6.32.1:
   version "6.37.2"
   resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.37.2.tgz#c7953cf136389394f0f1a8f70315919178e5ab8a"
   integrity sha512-Xm3n1Usgk2eBkufb1ssYDNGb3EXmV2wdQQIRGAWD9yppOYwsHpb8/w/+Opvnx6uEOFyt3US1dFbET5DTSyrRiA==
@@ -1978,6 +1998,18 @@ three-mesh-bvh@^0.6.0:
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.6.8.tgz#f27d18ca75bdc59316dff0f561af8fb316621a54"
   integrity sha512-EGebF9DZx1S8+7OZYNNTT80GXJZVf+UYXD/HyTg/e2kR/ApofIFfUS4ZzIHNnUVIadpnLSzM4n96wX+l7GMbnQ==
+
+three-stdlib@^2.23.4:
+  version "2.35.16"
+  resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.35.16.tgz#c7e9938005a8029299ec7a47b039f0de3ddd190c"
+  integrity sha512-TgXRLSC3rcsiYNgHaz4zVBvgwTxA+u2wdueXAZeNL5UxXbzgadx03JxSaGisutwY1Fkm9349IizFsxNtOwJVcg==
+  dependencies:
+    "@types/draco3d" "^1.4.0"
+    "@types/offscreencanvas" "^2019.6.4"
+    "@types/webxr" "^0.5.2"
+    draco3d "^1.4.1"
+    fflate "^0.6.9"
+    potpack "^1.0.1"
 
 three-stdlib@^2.23.9, three-stdlib@^2.27.1, three-stdlib@^2.29.4:
   version "2.35.15"
