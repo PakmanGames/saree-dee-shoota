@@ -4,6 +4,7 @@ import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
+import { BulletHit } from "./BulletHit";
 
 
 export const Experience = () => {
@@ -11,17 +12,8 @@ export const Experience = () => {
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState("bullets", []);
 
-  const onFire = (bullet) => {
-    setBullets((bullets) => [...bullets, bullet]);
-  };
-
-  const onHit = (bulletId) => {
-    setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
-  }
-
-  useEffect(() => {
-    setNetworkBullets(bullets);
-  }, [bullets]);
+  const [hits, setHits] = useState([]);
+  const [networkHits, setNetworkHits] = useMultiplayerState("hits", []);
 
   const start = async () => {
     await insertCoin();
@@ -43,6 +35,31 @@ export const Experience = () => {
       });
     });
   };
+
+  useEffect(() => {
+    start();
+  }, [])
+
+  const onFire = (bullet) => {
+    setBullets((bullets) => [...bullets, bullet]);
+  };
+
+  const onHit = (bulletId, position) => {
+    setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
+    setHits((hits) => [...hits, { id: bulletId, position }]);
+  };
+
+  const onHitEnded = (hitId) => {
+    setHits((hits) => hits.filter((h) => h.id !== hitId));
+  };
+
+  useEffect(() => {
+    setNetworkBullets(bullets);
+  }, [bullets]);
+
+  useEffect(() => {
+    setNetworkHits(hits);
+  }, [hits]);
 
   const onKilled = (_victim, killer) => {
     const killerState = players.find((p) => p.state.id === killer).state;
@@ -78,6 +95,9 @@ export const Experience = () => {
       ))}
       {(isHost() ? bullets : networkBullets).map((bullet) => (
         <Bullet key={bullet.id} {...bullet} onHit={() => onHit(bullet.id)} />
+      ))}
+      {(isHost() ? hits : networkHits).map((hit) => (
+        <BulletHit key={hit.id} {...hit} onHitEnded={(position) => onEnded(hit.id, position)} />
       ))}
       <Environment preset="sunset" />
     </>
