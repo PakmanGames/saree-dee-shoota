@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { CharacterSoldier } from "./CharacterSoldier"
 import { RigidBody, CapsuleCollider, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
-import { CameraControls } from "@react-three/drei";
+import { Billboard, CameraControls, Text } from "@react-three/drei";
 
 const MOVEMENT_SPEED = 200;
 const FIRE_RATE = 380;
@@ -64,6 +64,11 @@ export const CharacterController = ({
                 playerWorldPos.z,
                 true
             );
+        }
+
+        if (state.state.dead) {
+            setAnimation("Death");
+            return;
         }
 
         const angle = joystick.angle; // Get angle from joystick to update player position
@@ -140,6 +145,7 @@ export const CharacterController = ({
                     }
                 }}
             >
+                <PlayerInfo state={state.state} />
                 <group ref={character}>
                     <CharacterSoldier
                         color={state.state.profile?.color || "red"}
@@ -182,5 +188,26 @@ const Crosshair = (props) => {
                 <meshBasicMaterial color="black" opacity={0.2} transparent />
             </mesh>
         </group>
+    );
+}
+
+const PlayerInfo = ({ state }) => {
+    const health = state.health;
+    const name = state.profile.name;
+
+    return (
+        <Billboard position-y={2.5}>
+            <Text position-y={0.36} fontSize={0.4}>
+                {name}
+            </Text>
+            <mesh position-z={-0.1}>
+                <planeGeometry args={[1, 0.2]} />
+                <meshBasicMaterial color="black" transparent opacity={0.5} />
+            </mesh>
+            <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
+                <planeGeometry args={[1, 0.2]} />
+                <meshBasicMaterial color="red" />
+            </mesh>
+        </Billboard>
     );
 }

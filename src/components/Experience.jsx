@@ -44,11 +44,10 @@ export const Experience = () => {
     });
   };
 
-  useEffect(() => {
-    start();
-  }, []);
-
-  console.log("Current players:", players);
+  const onKilled = (_victim, killer) => {
+    const killerState = players.find((p) => p.state.id === killer).state;
+    killerState.setState("kills", killerState.state.kills + 1);
+  };
 
   return (
     <>
@@ -74,6 +73,7 @@ export const Experience = () => {
           joystick={joystick} 
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
+          onKilled={onKilled}
         />
       ))}
       {(isHost() ? bullets : networkBullets).map((bullet) => (
