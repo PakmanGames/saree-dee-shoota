@@ -1,5 +1,5 @@
 import { OrbitControls, Environment } from "@react-three/drei";
-import { insertCoin, onPlayerJoin, Joystick, myPlayer } from "playroomkit";
+import { insertCoin, onPlayerJoin, Joystick, myPlayer, useMultiplayerState } from "playroomkit";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import { CharacterController } from "./CharacterController";
@@ -9,6 +9,7 @@ import { Bullet } from "./Bullet";
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
+  const [networkBullets, setNetworkBullets] = useMultiplayerState("bullets", []);
 
   const onFire = (bullet) => {
     setBullets((bullets) => [...bullets, bullet]);
@@ -17,6 +18,10 @@ export const Experience = () => {
   const onHit = (bulletId) => {
     setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
   }
+
+  useEffect(() => {
+    setNetworkBullets(bullets);
+  }, [bullets]);
 
   const start = async () => {
     await insertCoin();
@@ -72,7 +77,7 @@ export const Experience = () => {
           onFire={onFire}
         />
       ))}
-      {bullets.map((bullet) => (
+      {(isHost() ? bullets : networkBullets).map((bullet) => (
         <Bullet key={bullet.id} {...bullet} onHit={() => onHit(bullet.id)} />
       ))}
       <Environment preset="sunset" />
