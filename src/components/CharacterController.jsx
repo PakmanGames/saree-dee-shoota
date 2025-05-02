@@ -7,7 +7,7 @@ import { Billboard, CameraControls, Text } from "@react-three/drei";
 const MOVEMENT_SPEED = 200;
 const FIRE_RATE = 380;
 
-// Fix bullet not shooting from gun mesh
+// Offset to fix bullet not shooting from gun mesh
 export const WEAPON_OFFSET = {
     x: -0.2,
     y: 1.4,
@@ -18,16 +18,19 @@ export const CharacterController = ({
     state,
     joystick,
     userPlayer,
-    onFire,
     onKilled,
+    onFire,
+    downgradePerformance,
     ...props
 }) => {
     const group = useRef();
     const character = useRef();
     const rigidbody = useRef();
-    const controls = useRef();
     const lastShoot = useRef(0);
+    const controls = useRef();
+    const directionalLight = useRef();
     const [animation, setAnimation] = useState("Idle");
+    const [weapon, setWeapon] = useState("AK");
 
     const scene = useThree((state) => state.scene);
     const spawnRandomly = () => {
@@ -49,6 +52,22 @@ export const CharacterController = ({
             spawnRandomly();
         }
     }, [])
+
+    useEffect(() => {
+        if (state.state.dead) {
+            const audio = new Audio("/audio/dead.mp3");
+            audio.volume = 0.5;
+            audio.play();
+        }
+    }, [state.state.dead]);
+
+    useEffect(() => {
+        if (state.state.health < 100) {
+            const audio = new Audio("/audio/hurt.mp3");
+            audio.volume = 0.5;
+            audio.play();
+        }
+    }, [state.state.health]);
 
     useFrame((_, delta) => {
         if (controls.current) {
@@ -97,7 +116,7 @@ export const CharacterController = ({
         }
 
         if (joystick.isPressed("shoot")) {
-            setAnimation("Idle_Shoot");
+            setAnimation(joystick.isPressed() && angle ? "Run_Shoot" : "Idle_Shoot");
             if (isHost()) {
                 if (Date.now() - lastShoot.current > FIRE_RATE) {
                     lastShoot.current = Date.now();
@@ -111,10 +130,19 @@ export const CharacterController = ({
                 }
             }
         }
+
+        if (isHost()) {
+            state.setState("pos", rigidbody.current.translation());
+        } else {
+            const pos = state.getState("pos");
+            if (pos) {
+                rigidbody.current.setTranslation(pos);
+            }
+        }
     });
 
     return (
-        <group ref={group} {...props}>
+        <group {...props} ref={group}>
             {
                 userPlayer && (<CameraControls ref={controls} />)
             }
@@ -148,11 +176,27 @@ export const CharacterController = ({
                 <PlayerInfo state={state.state} />
                 <group ref={character}>
                     <CharacterSoldier
-                        color={state.state.profile?.color || "red"}
+                        color={state.state.profile?.color}
                         animation={animation}
+                        weapon={weapon}
                     />
                     { userPlayer && <Crosshair position={[WEAPON_OFFSET.x, WEAPON_OFFSET.y, WEAPON_OFFSET.z]} />}
                 </group>
+                {userPlayer && (<directionalLight
+                    ref={directionalLight}
+                    position={[25, 18, -25]}
+                    intensity={0.3}
+                    castShadow={!downgradePerformance}
+                    shadow-camera-near={0}
+                    shadow-camera-far={100}
+                    shadow-camera-right={20}
+                    shadow-camera-left={-20}
+                    shadow-camera-top={20}
+                    shadow-camera-bottom={-20}
+                    shadow-mapSize-width={2048}
+                    shadow-mapSize-height={2048}
+                    shadow-bias={-0.0001}
+                />)}
                 <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
             </RigidBody>
         </group>

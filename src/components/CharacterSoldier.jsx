@@ -6,7 +6,7 @@ Command: npx gltfjsx@6.2.3 public/models/Character_Soldier.gltf -o src/component
 import { useGraph } from '@react-three/fiber';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
-import { Color, LoopOnce, MeshStandardMaterial, Skeleton } from 'three';
+import { Color, LoopOnce, MeshStandardMaterial } from 'three';
 import { SkeletonUtils } from 'three-stdlib';
 
 const WEAPONS = [
@@ -98,7 +98,7 @@ export function CharacterSoldier({
             <skinnedMesh name="Cube004" geometry={nodes.Cube004.geometry} material={materials.Skin} skeleton={nodes.Cube004.skeleton} />
             <skinnedMesh name="Cube004_1" geometry={nodes.Cube004_1.geometry} material={materials.DarkGrey} skeleton={nodes.Cube004_1.skeleton} />
             <skinnedMesh name="Cube004_2" geometry={nodes.Cube004_2.geometry} material={materials.Pants} skeleton={nodes.Cube004_2.skeleton} />
-            <skinnedMesh name="Cube004_3" geometry={nodes.Cube004_3.geometry} material={materials.Character_Main} skeleton={nodes.Cube004_3.skeleton} />
+            <skinnedMesh name="Cube004_3" geometry={nodes.Cube004_3.geometry} material={playerColorMaterial} skeleton={nodes.Cube004_3.skeleton} />
             <skinnedMesh name="Cube004_4" geometry={nodes.Cube004_4.geometry} material={materials.Black} skeleton={nodes.Cube004_4.skeleton} />
           </group>
         </group>

@@ -1,5 +1,5 @@
-import { OrbitControls, Environment } from "@react-three/drei";
-import { insertCoin, onPlayerJoin, Joystick, myPlayer, useMultiplayerState } from "playroomkit";
+import { Environment } from "@react-three/drei";
+import { insertCoin, isHost, onPlayerJoin, Joystick, myPlayer, useMultiplayerState } from "playroomkit";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import { CharacterController } from "./CharacterController";
@@ -7,7 +7,7 @@ import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
 
 
-export const Experience = () => {
+export const Experience = ({ downgradePerformance = false }) => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState("bullets", []);
@@ -23,7 +23,7 @@ export const Experience = () => {
       console.log("Player joined:", state.id);
       const joystick = new Joystick(state, {
         type: "angular",
-        buttons: [{ id: "fire", label: "Shoot" }],
+        buttons: [{ id: "shoot", label: "Shoot" }],
       });
       const newPlayer = { state, joystick };
       state.setState("health", 100);
@@ -68,20 +68,6 @@ export const Experience = () => {
 
   return (
     <>
-      <directionalLight
-        position={[25, 18, -25]}
-        intensity={0.3}
-        castShadow
-        shadow-camera-near={0}
-        shadow-camera-far={80}
-        shadow-camera-left={-30}
-        shadow-camera-right={30}
-        shadow-camera-top={25}
-        shadow-camera-bottom={-25}
-        shadow-mapSize-width={4096}
-        shadow-mapSize-height={4096}
-        shadow-bias={-0.0001}
-      />
       <Map />
       {players.map(({state, joystick}, index) => (
         <CharacterController 
@@ -91,6 +77,7 @@ export const Experience = () => {
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
           onKilled={onKilled}
+          downgradePerformance={downgradePerformance}
         />
       ))}
       {(isHost() ? bullets : networkBullets).map((bullet) => (

@@ -1,5 +1,7 @@
-import { RigidBody } from "@react-three/rapier";
+import { RigidBody, vec3 } from "@react-three/rapier";
+import { isHost } from "playroomkit";
 import { useEffect, useRef } from "react";
+import { MeshBasicMaterial } from "three";
 import { WEAPON_OFFSET } from "./CharacterController";
 
 const BULLET_SPEED = 20;
@@ -15,6 +17,9 @@ export const Bullet = ({ player, angle, position, onHit }) => {
     const rigidbody = useRef();
 
     useEffect(() => {
+        const audio = new Audio("/audio/rifle.mp3");
+        audio.play();
+
         const velocity = {
             x: Math.sin(angle) * BULLET_SPEED,
             y: 0,
@@ -22,9 +27,6 @@ export const Bullet = ({ player, angle, position, onHit }) => {
         };
 
         rigidbody.current.setLinvel(velocity, true);
-
-        const audio = new Audio("/audio/rifle.mp3");
-        audio.play();
     }, []);
 
     return (
@@ -36,14 +38,14 @@ export const Bullet = ({ player, angle, position, onHit }) => {
             >
                 <RigidBody 
                     ref={rigidbody} 
-                    gravityScale={0} 
-                    sensor 
+                    gravityScale={0}  
                     onIntersectionEnter={(e) => {
                         if (isHost() && e.other.rigidBody.userData?.type !== "bullet") {
                             rigidbody.current.setEnabled(false);
                             onHit(vec3(rigidbody.current.translation()));
                         }
                     }}
+                    sensor
                     userData = {{
                         type: "bullet",
                         player,
