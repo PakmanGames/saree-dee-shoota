@@ -1,38 +1,28 @@
 # 3D Shooter Game
 
-A multiplayer 3D shooter game built with React Three Fiber, Rapier Physics, and PlayroomKit.
+A multiplayer 3D shooter game built with React Three Fiber, Rapier Physics, and PlayroomKit. This project combines modern web technologies to create an immersive multiplayer first-person shooter experience that runs in the browser.
 
-## Features
+## 🎮 Features
 
-- 🎮 Real-time multiplayer gameplay
-- 🎯 First-person shooter mechanics
-- 🏃‍♂️ Character movement with joystick controls
-- 🎨 Customizable character colors
-- 🌍 Physics-based movement and collisions
-- 🎥 Dynamic camera controls
-- 🔫 Weapon system with fire rate control
-- 💀 Death and respawn mechanics
+- Real-time multiplayer gameplay with PlayroomKit
+- First-person shooter mechanics
+- Character movement with joystick controls
+- Customizable character colors
+- Physics-based movement and collisions using Rapier
+- Dynamic camera controls
+- Weapon system with fire rate control
+- Death and respawn mechanics
+- Mobile-friendly controls
+- Network synchronization of player positions and states
 
-To have it accessible from your mobile run
+## 🚀 Quick Start
+
+1. Clone the repository:
+```bash
+git clone https://github.com/PakmanGames/saree-dee-shoota.git
+cd 3d-shooter
 ```
-yarn dev --host
-```
-_It must be connected to the same network_
 
-![image](https://user-images.githubusercontent.com/6551176/221732091-23ee52cb-4150-42fa-b998-43628d7a6b0d.png)
-
-## Tech Stack
-
-- [React Three Fiber](https://github.com/pmndrs/react-three-fiber) - React renderer for Three.js
-- [@react-three/rapier](https://github.com/pmndrs/react-three-rapier) - Physics engine
-- [@react-three/drei](https://github.com/pmndrs/drei) - Useful helpers for React Three Fiber
-- [PlayroomKit](https://playroomkit.dev/) - Multiplayer functionality
-- [Three.js](https://threejs.org/) - 3D graphics library
-- [Vite](https://vitejs.dev/) - Build tool and dev server
-
-## Getting Started
-
-1. Clone the repository
 2. Install dependencies:
 ```bash
 yarn
@@ -43,47 +33,92 @@ yarn
 yarn dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+4. For mobile testing, run with host flag:
+```bash
+yarn dev --host
+```
+_Note: Mobile devices must be connected to the same network as the development machine_
 
-## Game Controls
+5. Open your browser and navigate to:
+- Local: `http://localhost:5173`
+- Network: `http://[your-ip]:5173` (for mobile testing)
 
-- **Movement**: Use the joystick to move your character
-- **Shooting**: Click the "Shoot" button on the joystick
-- **Camera**: The camera follows your character automatically
+## 🛠️ Tech Stack
 
-## Project Structure
+### Core Technologies
+- [React Three Fiber](https://github.com/pmndrs/react-three-fiber) - React renderer for Three.js
+- [@react-three/rapier](https://github.com/pmndrs/react-three-rapier) - Physics engine
+- [@react-three/drei](https://github.com/pmndrs/drei) - Useful helpers for React Three Fiber
+- [PlayroomKit](https://playroomkit.dev/) - Multiplayer functionality
+- [Three.js](https://threejs.org/) - 3D graphics library
+- [Vite](https://vitejs.dev/) - Build tool and dev server
+
+### Additional Dependencies
+- [@react-three/postprocessing](https://github.com/pmndrs/react-postprocessing) - Post-processing effects
+- [leva](https://github.com/pmndrs/leva) - Debug UI
+- [three-stdlib](https://github.com/pmndrs/three-stdlib) - Three.js utilities
+- [TailwindCSS](https://tailwindcss.com/) - Styling
+
+## 🎮 Game Controls
+
+### Desktop
+- **Movement**: WASD or Arrow keys
+- **Shooting**: Left mouse button
+- **Camera**: Mouse movement
+
+### Mobile
+- **Movement**: On-screen joystick
+- **Shooting**: Shoot button on joystick
+- **Camera**: Automatic following
+
+## 📁 Project Structure
 
 ```
 src/
-├── components/
+├── assets/           # Game assets (models, textures, etc.)
+├── components/       # React components
 │   ├── CharacterController.jsx  # Player movement and controls
 │   ├── CharacterSoldier.jsx     # Character model and animations
 │   ├── Experience.jsx          # Main game scene
 │   └── Map.jsx                 # Game map and environment
-├── App.jsx                     # Root component
-└── main.jsx                    # Entry point
+├── App.jsx          # Root component
+├── main.jsx         # Entry point
+└── index.css        # Global styles
 ```
 
-## Physics and Movement
+## 🎯 Game Mechanics
 
-The game uses Rapier Physics for realistic movement and collisions:
+### Physics and Movement
 - Characters use `RigidBody` with `CapsuleCollider` for collision detection
 - Movement is physics-based with impulse forces
 - Characters have locked rotations to prevent tipping
 - Network synchronization of player positions
 
-## Multiplayer Features
-
+### Multiplayer Features
 - Real-time player synchronization
 - Player state management (health, deaths, kills)
 - Host/client architecture for physics calculations
 - Player join/quit handling
+- Room-based multiplayer system
 
-## Development
+## 🛠️ Development
 
-The project uses Vite for fast development and building. Key development features:
+### Building for Production
+```bash
+yarn build
+yarn preview
+```
+
+### Development Features
 - Hot Module Replacement (HMR)
 - TypeScript support
 - Optimized production builds
 - Development server with automatic reloading
+- Debug UI with Leva
+
+## 📸 Screenshots
+
+![image1](./public/image1.png)
+![image2](./public/image2.png)
+![image3](./public/image3.png)
 
