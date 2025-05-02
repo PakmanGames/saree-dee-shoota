@@ -6,24 +6,19 @@ import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
 
-
-export const Experience = ({ downgradePerformance = false }) => {
+export const Experience = ({ downgradedPerformance = false }) => {
   const [players, setPlayers] = useState([]);
-  const [bullets, setBullets] = useState([]);
-  const [networkBullets, setNetworkBullets] = useMultiplayerState("bullets", []);
-
-  const [hits, setHits] = useState([]);
-  const [networkHits, setNetworkHits] = useMultiplayerState("hits", []);
-
   const start = async () => {
+    // Start the game
     await insertCoin();
-    console.log("Game started");
 
+    // Create a joystick controller for each joining player
     onPlayerJoin((state) => {
-      console.log("Player joined:", state.id);
+      // Joystick will only create UI for current player (myPlayer)
+      // For others, it will only sync their state
       const joystick = new Joystick(state, {
         type: "angular",
-        buttons: [{ id: "shoot", label: "Shoot" }],
+        buttons: [{ id: "fire", label: "Fire" }],
       });
       const newPlayer = { state, joystick };
       state.setState("health", 100);
@@ -38,14 +33,23 @@ export const Experience = ({ downgradePerformance = false }) => {
 
   useEffect(() => {
     start();
-  }, [])
+  }, []);
+
+  const [bullets, setBullets] = useState([]);
+  const [hits, setHits] = useState([]);
+
+  const [networkBullets, setNetworkBullets] = useMultiplayerState(
+    "bullets",
+    []
+  );
+  const [networkHits, setNetworkHits] = useMultiplayerState("hits", []);
 
   const onFire = (bullet) => {
     setBullets((bullets) => [...bullets, bullet]);
   };
 
   const onHit = (bulletId, position) => {
-    setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
+    setBullets((bullets) => bullets.filter((bullet) => bullet.id !== bulletId));
     setHits((hits) => [...hits, { id: bulletId, position }]);
   };
 
@@ -69,22 +73,26 @@ export const Experience = ({ downgradePerformance = false }) => {
   return (
     <>
       <Map />
-      {players.map(({state, joystick}, index) => (
-        <CharacterController 
-          key={state.id} 
-          state={state} 
-          joystick={joystick} 
+      {players.map(({ state, joystick }, index) => (
+        <CharacterController
+          key={state.id}
+          state={state}
           userPlayer={state.id === myPlayer()?.id}
-          onFire={onFire}
+          joystick={joystick}
           onKilled={onKilled}
-          downgradePerformance={downgradePerformance}
+          onFire={onFire}
+          downgradedPerformance={downgradedPerformance}
         />
       ))}
       {(isHost() ? bullets : networkBullets).map((bullet) => (
-        <Bullet key={bullet.id} {...bullet} onHit={() => onHit(bullet.id)} />
+        <Bullet
+          key={bullet.id}
+          {...bullet}
+          onHit={(position) => onHit(bullet.id, position)}
+        />
       ))}
       {(isHost() ? hits : networkHits).map((hit) => (
-        <BulletHit key={hit.id} {...hit} onHitEnded={(position) => onEnded(hit.id, position)} />
+        <BulletHit key={hit.id} {...hit} onEnded={() => onHitEnded(hit.id)} />
       ))}
       <Environment preset="sunset" />
     </>

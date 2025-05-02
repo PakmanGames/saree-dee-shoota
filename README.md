@@ -13,6 +13,11 @@ A multiplayer 3D shooter game built with React Three Fiber, Rapier Physics, and 
 - 🔫 Weapon system with fire rate control
 - 💀 Death and respawn mechanics
 
+To have it accessible from your mobile run
+```
+yarn dev --host
+```
+_It must be connected to the same network_
 
 ![image](https://user-images.githubusercontent.com/6551176/221732091-23ee52cb-4150-42fa-b998-43628d7a6b0d.png)
 
